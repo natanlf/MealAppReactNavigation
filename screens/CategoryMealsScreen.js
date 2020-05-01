@@ -1,33 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { CATEGORIES, MEALS } from '../data/dummy-data';
+import { CATEGORIES } from '../data/dummy-data';
 import MealList from '../components/MealList';
 
 const CategoryMealScreen = props => {
 
-  const renderMealItem = itemData => {
-    return (
-      <MealItem
-        title={itemData.item.title}
-        image={itemData.item.imageUrl}
-        duration={itemData.item.duration}
-        complexity={itemData.item.complexity}
-        affordability={itemData.item.affordability}
-        onSelectMeal={() => {
-          props.navigation.navigate({
-            routeName: 'MealDetail',
-            params: {
-              mealId: itemData.item.id
-            }
-          });
-        }}
-      />
-    );
-  };
-
   const catId = props.navigation.getParam('categoryId');
 
-  const displayedMeals = MEALS.filter(
+  //filteredMeals é o nome do state no reducer e meals é o nome da key do reducer no arquivo app.js no combineReducers
+  const availableMeals = useSelector(state => state.meals.filteredMeals); 
+
+  const displayedMeals = availableMeals.filter(
     meal => meal.categoryIds.indexOf(catId) >= 0
   );
 
