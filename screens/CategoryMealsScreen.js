@@ -15,7 +15,7 @@ const CategoryMealScreen = props => {
         affordability={itemData.item.affordability}
         onSelectMeal={ () => {
           props.navigation.navigate({
-            routeName: 'Meal Detail',
+            routeName: 'MealDetail',
             params: {
               mealId: itemData.item.id
             }
