@@ -32,7 +32,7 @@ const MealsFavTabNavigator = createBottomTabNavigator(
   {
     Meals: { //MealsNavigator é o que usamos desde o início, agora aparece tb no footer
       screen: MealsNavigator,
-      navigationOption: {
+      navigationOptions: {
         tabBarIcon: tabInfo => {
           return (
             <Ionicons
