@@ -10,6 +10,15 @@ import FavoriteScreen from '../screens/FavoritesScreen';
 
 import Colors from '../constants/Colors';
 
+const defaultstackNavOptions = {
+  headerStyle: {
+    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
+  },
+  headerTintColor:
+      Platform.OS === 'android' ? 'white' : Colors.primaryColor,
+    headerTitle: 'A Screen'
+}
+
 const MealsNavigator = createStackNavigator({
   Categories: CategoriesScreen,
   CategoryMeals: {
@@ -18,14 +27,18 @@ const MealsNavigator = createStackNavigator({
   MealDetail: MealDetailScreen
 },
   {
-    defaultNavigationOptions: { //assim não preciso informar em todas as telas as configs do header como cor por exemplo
-      headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
-      },
-      headerTintColor:
-        Platform.OS === 'android' ? 'white' : Colors.primaryColor,
-      headerTitle: 'A Screen' //título padrão para quando não informar algum
-    }
+    defaultNavigationOptions: defaultstackNavOptions
+  }
+);
+
+const FavNavigator = createStackNavigator(
+  {
+    Favorites: FavoriteScreen,
+    MealDetail: MealDetailScreen
+  },
+  {
+    // initialRouteName: 'Categories',
+    defaultNavigationOptions: defaultstackNavOptions
   }
 );
 
@@ -45,14 +58,15 @@ const tabScreenConfig = {
     }
   },
   Favorites: {
-    screen: FavoriteScreen,
+    screen: FavNavigator,
     navigationOptions: {
       tabBarLabel: 'Favorites!',
       tabBarIcon: tabInfo => {
         return (
           <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />
         );
-      }
+      },
+      tabBarColor: Colors.accentColor
     }
   }
 }
@@ -60,7 +74,7 @@ const tabScreenConfig = {
 /* Não mudou muita coisa, continuamos tenho o meals Navigator e o Favorites nessa nova variável
    Foi necessário fazer isso para ter um estilo no Android e outro no IOS
    O que acho interessante é que podemos referenciar uma tela ou um navigator que possui várias.
-   Como MealsNavigator que possui várias telas, é um createStackNavigator e Favorites que referência a tela de favoritos
+   Como MealsNavigator que possui várias telas, é um createStackNavigator e Favorites que referência createStackNavigator agora
 */
 const MealsFavTabNavigator = Platform.OS === 'android'
 ? createMaterialBottomTabNavigator(tabScreenConfig, {
