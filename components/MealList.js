@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import MealItem from './MealItem';
 
 const MealList = props => { /* MealItem, passamos a usar aqui agora, em CategoryMealScreen agora vamos usar o MealList ao invés do MealItem */
+    const favoriteMeals = useSelector(state => state.meals.favoriteMeals); //acessa o redux
     const renderMealItem = itemData => { 
+        const isFavorite = favoriteMeals.some(meal => meal.id === itemData.item.id); //se o item da lista está no array de favoritos, retorna true
         return (
             <MealItem
                 title={itemData.item.title}
@@ -17,7 +20,8 @@ const MealList = props => { /* MealItem, passamos a usar aqui agora, em Category
                         routeName: 'MealDetail',
                         params: {
                             mealId: itemData.item.id,
-                            mealTitle: itemData.item.title
+                            mealTitle: itemData.item.title,
+                            isFav: isFavorite //envia true ou false
                         }
                     })
                 }}
