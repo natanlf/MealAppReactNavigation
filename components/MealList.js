@@ -16,7 +16,8 @@ const MealList = props => { /* MealItem, passamos a usar aqui agora, em Category
                     props.navigation.navigate({
                         routeName: 'MealDetail',
                         params: {
-                        mealId: itemData.item.id
+                            mealId: itemData.item.id,
+                            mealTitle: itemData.item.title
                         }
                     })
                 }}
